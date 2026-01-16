@@ -74,7 +74,7 @@ separation of concerns, scalability, and maintainability.
 
 ### Architecture Diagram
 
-![Backend Architecture](assets/architecture.png)
+![Backend Architecture](/assets/architecture.png)
 
 ### Architecture Layers
 
