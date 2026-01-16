@@ -1,4 +1,4 @@
-import { apiClient } from "./axios";
+import { apiClient } from "../config/axios";
 import type { Project } from "../types";
 
 export const getProjects = (): Promise<Project[]> =>

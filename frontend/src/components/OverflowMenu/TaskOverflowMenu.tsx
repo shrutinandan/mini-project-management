@@ -5,25 +5,40 @@ import {
 import type { TaskStatus } from "../../types";
 
 interface Props {
+  currentStatus: TaskStatus;
   onMove: (status: TaskStatus) => void;
   onDelete: () => void;
 }
 
-export const TaskOverflowMenu = ({ onMove, onDelete }: Props) => {
+export const TaskOverflowMenu = ({
+  currentStatus,
+  onMove,
+  onDelete
+}: Props) => {
   return (
     <OverflowMenu size="sm" ariaLabel="Task actions">
-      <OverflowMenuItem
-        itemText="Move to Pending"
-        onClick={() => onMove("pending")}
-      />
-      <OverflowMenuItem
-        itemText="Move to In Progress"
-        onClick={() => onMove("in-progress")}
-      />
-      <OverflowMenuItem
-        itemText="Move to Completed"
-        onClick={() => onMove("completed")}
-      />
+
+      {currentStatus !== "pending" && (
+        <OverflowMenuItem
+          itemText="Move to Pending"
+          onClick={() => onMove("pending")}
+        />
+      )}
+
+      {currentStatus !== "in-progress" && (
+        <OverflowMenuItem
+          itemText="Move to In Progress"
+          onClick={() => onMove("in-progress")}
+        />
+      )}
+
+      {currentStatus !== "completed" && (
+        <OverflowMenuItem
+          itemText="Move to Completed"
+          onClick={() => onMove("completed")}
+        />
+      )}
+
       <OverflowMenuItem
         hasDivider
         isDelete

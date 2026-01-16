@@ -1,4 +1,4 @@
-import { apiClient } from "./axios";
+import { apiClient } from "../config/axios";
 import type { Project, Task, TaskResponse, TaskStatus } from "../types";
 
 /*** Get all tasks for a project ***/

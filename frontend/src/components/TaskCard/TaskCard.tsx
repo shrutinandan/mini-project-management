@@ -15,7 +15,7 @@ interface Props {
 
 const statusMap: Record<
   TaskStatus,
-  { label: string; type: TagProps["type"] }
+  { label: string; type: TagProps<"span">["type"] }
 > = {
   pending: { label: "Pending", type: "gray" },
   "in-progress": { label: "In progress", type: "blue" },
@@ -49,6 +49,7 @@ export const TaskCard = memo(({ task, onStatusChange, onDelete }: Props) => {
         <TaskOverflowMenu
           onMove={handleMove}
           onDelete={handleDelete}
+          currentStatus={task.status}
         />
       </div>
 

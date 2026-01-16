@@ -6,7 +6,6 @@ import {
   Theme,
   SkipToContent,
   HeaderContainer,
-  SideNav,
 } from "@carbon/react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 
@@ -30,9 +29,7 @@ const HeaderComponent = () => {
         navigate("/")}>
         &nbsp;Mini Project
       </HeaderName>
-     
       <HeaderGlobalBar>
-      
       </HeaderGlobalBar>
     </Header>
   );

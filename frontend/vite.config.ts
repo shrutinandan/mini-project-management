@@ -24,4 +24,16 @@ export default defineConfig({
    host: true,
    origin: "http://0.0.0.0:8080",
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        quietDeps: true, // This silences warnings in node_modules
+      },
+    },
+  },
+  // test: {
+  //   globals: true,
+  //   environment: "jsdom",
+  //   setupFiles: "./src/tests/setupTests.ts", // <-- add this
+  // },
  });
