@@ -18,7 +18,6 @@ export const createTask = async (
     );
 
     const response = res as any; // 👈 backend returns { message, data }
-    console.log('response', response)
 
     if (!response?.data?.id) {
       throw new Error("Invalid task response");
@@ -56,7 +55,6 @@ export const updateTaskStatus = (
 export const deleteTask = async (taskId: string) => {
   try {
     const res: any = await apiClient.delete(`/api/v1/tasks/${taskId}`);
-    console.log('res api', res)
 
     return {
       message: res.message,

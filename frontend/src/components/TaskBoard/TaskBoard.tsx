@@ -15,19 +15,17 @@ interface Props {
 }
 
 export const TaskBoard = ({ projectId, projectName }: Props) => {
-  console.log('projectId', projectId, projectName)
   const { tasks, loading, updateStatus, removeTask, addTask, showNotification, notificationKind, notificationTitle } = useTasks(projectId);
-  console.log('tasks in taskboard', tasks)
   const[openModal, setOpenModal] = useState(false);
 
 
   // 🔒 Prevent empty flicker
   const hasData = tasks.length > 0;
 
-  useEffect(() => {
-  console.log("TaskBoard mounted", projectId);
-  return () => console.log("TaskBoard unmounted");
-}, []);
+//   useEffect(() => {
+//   console.log("TaskBoard mounted", projectId);
+//   return () => console.log("TaskBoard unmounted");
+// }, []);
 
 
   const groupedTasks = useMemo<Record<TaskStatus, Task[]>>(() => ({

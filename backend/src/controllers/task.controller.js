@@ -26,7 +26,6 @@ exports.createTask = async (req, res) => {
 };
 
 exports.getTasksByProjectId = (req, res) => {
-  console.log('req.params.projectId', req.params.projectId)
   const tasks = taskService.getTasksByProjectId(req.params.projectId);
   res.json(tasks);
 };
