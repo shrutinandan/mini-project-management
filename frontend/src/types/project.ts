@@ -3,3 +3,7 @@ export interface Project {
   name: string;
   description?: string;
 }
+export interface ProjectResponse {
+  data: Project,
+  message: string
+}

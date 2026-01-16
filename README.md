@@ -17,6 +17,8 @@ This project demonstrates the ability to design, implement, and document a produ
 ### 🌐 Frontend (`.env`)
 ```
 VITE_BACKEND_URL= # replace this with backend url.
+VITE_ENVNAME=DEV. #value should be DEV | PROD
+
 
 ```
 
@@ -117,7 +119,7 @@ to a real database without impacting controllers or routes.
 
 ### **Projects**
 
-#### **Create Project**
+#### **1. Create Project**
 
 ```http
 POST /api/projects
@@ -137,16 +139,18 @@ Content-Type: application/json
 
 ```json
 {
-  "id": "p1",
-  "name": "Website Redesign",
-  "description": "Redesign the company website",
-  "createdAt": "2026-01-16T10:00:00Z"
+    "message": "Project created successfully",
+    "data": {
+        "id": "ff637b15-da6d-41b1-bf91-398e563c2eba",
+        "name": "Website Redesign",
+        "description": "Redesign the company website"
+    }
 }
 ```
 
 ---
 
-#### **List Projects**
+#### **2. List Projects**
 
 ```http
 GET /api/projects
@@ -161,7 +165,6 @@ Authorization: Bearer <your-token>
     "id": "p1",
     "name": "Website Redesign",
     "description": "Redesign the company website",
-    "createdAt": "2026-01-16T10:00:00Z"
   }
 ]
 ```
@@ -170,7 +173,7 @@ Authorization: Bearer <your-token>
 
 ### **Tasks**
 
-#### **Add Task to a Project**
+#### **1. Add Task to a Project**
 
 ```http
 POST /api/projects/:projectId/tasks
@@ -182,7 +185,6 @@ Content-Type: application/json
 ```json
 {
   "title": "Design database schema",
-  "description": "Create schema for task management",
 }
 ```
 
@@ -191,19 +193,20 @@ Content-Type: application/json
 ```json
 
 {
- "data":{
-  "title": "Design database schema",
-  "description": "Create schema for task management",
-  "status": "pending",
-  "createdAt": "26/02/2025"
-    }, 
-   "messgage":"Task successfully created"
+    "message": "Task created successfully",
+    "data": {
+        "id": "35b56796-5610-4815-a438-06532d432e0c",
+        "projectId": "7fc488ad-6c46-4fc0-9182-a579748548e6",
+        "title": "Design database schema",
+        "status": "pending",
+        "createdAt": "2026-01-16T20:06:29.080Z"
+    }
 }
 ```
 
 ---
 
-#### **List Tasks for a Project**
+#### **2. List Tasks for a Project**
 
 ```http
 GET /api/projects/:projectId/tasks
@@ -216,9 +219,8 @@ Content-Type: application/json
 [
   {
     "id": "t1",
-    "projectId": "p1",
+    "projectId": "7fc488ad-6c46-4fc0-9182-a579748548e6",
     "title": "Design database schema",
-    "description": "Create schema for task management",
     "status": "pending",
     "createdAt": "2026-01-16T10:05:00Z"
   }
@@ -227,7 +229,7 @@ Content-Type: application/json
 
 ---
 
-#### **Update Task Status**
+#### **3. Update Task Status**
 
 ```http
 PUT /api/tasks/:taskId
@@ -247,15 +249,14 @@ Content-Type: application/json
 ```json
 {
   "id": "t1",
-  "projectId": "p1",
+  "projectId": "7fc488ad-6c46-4fc0-9182-a579748548e6",
   "title": "Design database schema",
-  "description": "Create schema for task management",
   "status": "completed",
-  "updatedAt": "2026-01-16T11:00:00Z"
+  "createdAt": "2026-01-16T11:00:00Z"
 }
 ```
 
-#### **Delete a Task**
+#### **4. Delete a Task**
 
 ```http
 DELETE /api/tasks/:taskId
@@ -267,7 +268,7 @@ Content-Type: application/json
 {
     "message": "Task deleted successfully",
     "data": {
-        "id": "569535ec-9360-4192-98bf-bc2a7639292d"
+        "id": "7fc488ad-6c46-4fc0-9182-a579748548e6"
     }
 }
 ```

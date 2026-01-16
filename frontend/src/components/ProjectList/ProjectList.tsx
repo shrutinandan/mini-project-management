@@ -38,20 +38,12 @@ import { Add } from "@carbon/icons-react";
 import { LoadingOverlay } from "../common/LoadingOverlay";
 import { delay } from "../../utils/delay";
 import type { Project } from "../../types/project";
+import type { NotificationKind } from "../../types";
 
 interface Props {
   /** Callback when user selects a project to view tasks */
   onSelect: (id: string, name: string) => void;
 }
-
-type NotificationKind =
-  | "error"
-  | "info"
-  | "info-square"
-  | "success"
-  | "warning"
-  | "warning-alt"
-  | undefined;
 
 export const ProjectList = memo(({ onSelect }: Props) => {
   // ------------------------------
@@ -121,11 +113,11 @@ export const ProjectList = memo(({ onSelect }: Props) => {
         const response = await createProject(name, description);
 
         // Add new project to state
-        setProjects(prev => [...prev, response]);
+        setProjects(prev => [...prev, response.data]);
 
         // Show success notification
         setNotificationKind("success");
-        setNotificationTitle("Project created successfully");
+        setNotificationTitle(response.message? response.message : "Project created successfully");
         setShowNotification(true);
       } catch (err: any) {
         console.error("Failed to create project:", err);
