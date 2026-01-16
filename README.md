@@ -101,6 +101,14 @@ separation of concerns, scalability, and maintainability.
 This architecture allows the backend to evolve easily from file-based storage
 to a real database without impacting controllers or routes.
 
+## UI SCREENS
+1. Project Screen
+
+![Project Screen](/assets/project_screen.png)
+
+2. TaskBoard Screen
+
+![Task Board Screen](/assets/taskboard_screen.png)
 
 - RESTful API design
 

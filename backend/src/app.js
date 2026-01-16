@@ -36,7 +36,6 @@ app.use(notFound);
 // Centralized error handler
 app.use(errorHandler);
 
-
 app.use(express.json());
 
 

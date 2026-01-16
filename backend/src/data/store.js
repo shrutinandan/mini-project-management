@@ -15,7 +15,7 @@ const loadData = () => {
   projectsData.forEach(p => projects.set(p.id, p));
   tasksData.forEach(t => tasks.set(t.id, t));
 
-  console.log("📦 In-memory data loaded");
+  console.log(" In-memory data loaded");
 };
 
 module.exports = {
