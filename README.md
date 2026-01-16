@@ -110,7 +110,7 @@ to a real database without impacting controllers or routes.
 
 ![Task Board Screen](/assets/taskboard_screen.png)
 
-- RESTful API design
+### RESTful API design
 
 ## **API Endpoints**
 
