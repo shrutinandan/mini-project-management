@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import type { Task, TaskStatus } from "../types";
+
 import { fetchTasksByProjectId, updateTaskStatus, createTask, deleteTask } from "../services/task.api";
 import { delay } from "../utils/delay";
+import type { Task, TaskStatus } from "../types/tasks";
+import type { NotificationKind } from "../types";
 
-type NotificationKind = "error" | "info" | "info-square" | "success" | "warning" | "warning-alt" | undefined
 
 export const useTasks = (projectId: string) => {
   const [tasks, setTasks] = useState<Task[]>([]);

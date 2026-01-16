@@ -2,7 +2,8 @@ import {
   OverflowMenu,
   OverflowMenuItem
 } from "@carbon/react";
-import type { TaskStatus } from "../../types";
+import type { TaskStatus } from "../../types/tasks";
+
 
 interface Props {
   currentStatus: TaskStatus;

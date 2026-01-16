@@ -31,12 +31,13 @@ import {
   Pagination
 } from "@carbon/react";
 
-import type { Project } from "../../types";
+
 import { getProjects, createProject } from "../../services/project.api";
 import { CreateProjectModal } from "../modal/CreateProjectModal";
 import { Add } from "@carbon/icons-react";
 import { LoadingOverlay } from "../common/LoadingOverlay";
 import { delay } from "../../utils/delay";
+import type { Project } from "../../types/project";
 
 interface Props {
   /** Callback when user selects a project to view tasks */

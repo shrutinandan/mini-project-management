@@ -4,58 +4,93 @@ import {
   HeaderName,
   HeaderGlobalBar,
   Theme,
-  SkipToContent,
   HeaderContainer,
 } from "@carbon/react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { useState, type JSX } from "react";
 
 import "./App.scss";
 import { Dashboard } from "./pages/Dashboard";
-import { useState, type JSX } from "react";
 import { SidePanel } from "./components/SidePanel/SidePanel";
-import { TaskBoard } from "./components/TaskBoard/TaskBoard";
 import { TaskBoardWrapper } from "./components/TaskBoardWrapper/TaskBoardWrapper";
-// import type { RootState } from "./store/userSlice"; // adjust path
 
-
+/**
+ * HeaderComponent
+ * ----------------
+ * Application-level header using Carbon Header.
+ * - Displays app title
+ * - Handles top-level navigation (home redirect)
+ *
+ * Kept separate from App to:
+ *  - Avoid re-renders
+ *  - Improve readability
+ *  - Keep routing logic isolated
+ */
 const HeaderComponent = () => {
-  const navigate = useNavigate(); // Use useNavigate inside the c
- 
-
+  const navigate = useNavigate();
 
   return (
-    <Header aria-label="Header for Our Skeleton App">
-      <HeaderName style={{  cursor: "pointer" }} onClick={() => 
-        navigate("/")}>
+    <Header aria-label="Header for Mini Project App">
+      {/* App name acts as a home navigation link */}
+      <HeaderName
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate("/")}
+      >
         &nbsp;Mini Project
       </HeaderName>
-      <HeaderGlobalBar>
-      </HeaderGlobalBar>
+
+      {/* Reserved for future global actions (profile, notifications, etc.) */}
+      <HeaderGlobalBar />
     </Header>
   );
 };
 
+/**
+ * App
+ * ----
+ * Root component responsible for:
+ *  - Application layout
+ *  - Theme configuration
+ *  - Routing
+ *  - Global navigation structure
+ *
+ * Business logic is intentionally delegated to child components.
+ */
 const App = (): JSX.Element => {
+  /**
+   * Tracks the currently active section in the SidePanel.
+   * Used purely for UI highlighting, not routing.
+   */
   const [activeSection, setActiveSection] =
     useState<"projects" | "taskboard">("projects");
 
   return (
     <BrowserRouter>
+      {/* Carbon global theme wrapper */}
       <Theme theme="g100">
         <HeaderContainer
           render={() => (
             <>
+              {/* Top navigation header */}
               <HeaderComponent />
 
+              {/* Left navigation panel */}
               <SidePanel
                 active={activeSection}
                 onChange={setActiveSection}
               />
 
-              <Content style={{height: '100vh'}}>
+              {/* Main content area: route-driven */}
+              <Content style={{ height: "100vh" }}>
                 <Routes>
+                  {/* Dashboard: project listing */}
                   <Route path="/" element={<Dashboard />} />
-                  <Route path="/tasks/:projectId/:projectName" element={<TaskBoardWrapper />} />
+
+                  {/* Task board scoped to a project */}
+                  <Route
+                    path="/tasks/:projectId/:projectName"
+                    element={<TaskBoardWrapper />}
+                  />
                 </Routes>
               </Content>
             </>
@@ -65,7 +100,5 @@ const App = (): JSX.Element => {
     </BrowserRouter>
   );
 };
-
-
 
 export default App;

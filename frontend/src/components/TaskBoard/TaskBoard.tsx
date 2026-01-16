@@ -12,7 +12,7 @@
 
 import { Grid, Column, Tile, Button, InlineNotification } from "@carbon/react";
 import { useMemo, useCallback, useState } from "react";
-import type { Task, TaskStatus } from "../../types";
+
 import { TaskColumn } from "../TaskColumn/TaskColumn";
 import { useTasks } from "../../hooks/useTasks";
 import { TaskBoardSkeleton } from "../TaskBoardSkeleton/TaskBoardSkeleton";
@@ -20,6 +20,7 @@ import { Add } from "@carbon/icons-react";
 import { AddTaskModal } from "../modal/AddTaskModal";
 import { LoadingOverlay } from "../common/LoadingOverlay";
 import "./TaskBoard.scss";
+import type { Task, TaskStatus } from "../../types/tasks";
 
 interface Props {
   /** ID of the current project */
@@ -36,7 +37,6 @@ export const TaskBoard = ({ projectId, projectName }: Props) => {
   const {
     tasks,
     loading,          // True while a task operation (add/update/delete) is in progress
-    loadingSkeleton,   // True while the initial fetch of tasks is in progress
     hasFetched,        // True after first fetch completes to prevent empty flicker
     updateStatus,
     removeTask,

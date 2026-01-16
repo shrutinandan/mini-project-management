@@ -1,8 +1,8 @@
 import { Stack, Tag } from "@carbon/react";
 import { memo, useCallback } from "react";
-import type { Task, TaskStatus } from "../../types";
 import { TaskOverflowMenu } from "../OverflowMenu/TaskOverflowMenu";
 import type { TagProps } from "@carbon/react";
+import type { Task, TaskStatus } from "../../types/tasks";
 
 interface Props {
   task: Task;

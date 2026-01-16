@@ -1,7 +1,6 @@
 import {
   Modal,
   TextInput,
-  Button,
   InlineLoading
 } from "@carbon/react";
 import { useState } from "react";

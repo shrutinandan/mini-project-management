@@ -1,7 +1,8 @@
 import { Stack, Tile } from "@carbon/react";
 import { memo } from "react";
-import type { Task, TaskStatus } from "../../types";
+
 import { TaskCard } from "../TaskCard/TaskCard";
+import type { Task, TaskStatus } from "../../types/tasks";
 
 interface Props {
   title: string;

@@ -1,10 +1,8 @@
 import React from "react";
 import { CircleLoader } from "react-spinners";
+import type { LoadingOverlayProps } from "../../types";
 
-interface LoadingOverlayProps {
-  loading: boolean;
-  text?: string;
-}
+
 
 export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({
   loading,

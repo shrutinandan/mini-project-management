@@ -1,5 +1,6 @@
 import { apiClient } from "../config/axios";
-import type { Project, Task, TaskResponse, TaskStatus } from "../types";
+import type { Task, TaskResponse, TaskStatus } from "../types/tasks";
+
 
 /*** Get all tasks for a project ***/
 export const fetchTasksByProjectId = (projectId: string): Promise<Task[]> =>
