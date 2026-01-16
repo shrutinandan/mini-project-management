@@ -11,15 +11,6 @@ This project demonstrates the ability to design, implement, and document a produ
 - Frontend: React, TypeScript
 - Testing: Jest + Supertest
 
-## Running Backend
-cd backend
-npm install
-npm run dev
-
-## Running Frontend
-cd frontend
-npm install
-npm run dev
 
 ## ⚙️ Environment Variables
 
@@ -38,8 +29,14 @@ VITE_BACKEND_URL= # replace this with backend url.
 1. **Clone the repository**
 ```bash
 git clone https://github.com/shrutinandan/mini-project-management
+```
+
+2. **Run Frontend**
+
+```
 cd frontend
 ```
+
 Create a .env file and paste the below env. Change the value according to your requirement
 
 Run the following commands to get the app running :
@@ -52,9 +49,11 @@ npm run dev
 ```
 
 
-2. **Backend**
+3. **Run Backend**
 
 Run the following commands to get the app running :
+
+cd backend
 
 ```
 npm install
