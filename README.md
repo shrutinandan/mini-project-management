@@ -66,72 +66,221 @@ npm run dev
 ---
 
 ## Architecture
-- Layered backend architecture
-┌────────────────────────────┐
-│        Routes Layer        │  ← Express routes
-│  (URL → Controller)        │
-└──────────────┬─────────────┘
-               │
-┌──────────────▼─────────────┐
-│      Controller Layer      │  ← HTTP logic
-│  (req, res, status codes)  │
-└──────────────┬─────────────┘
-               │
-┌──────────────▼─────────────┐
-│       Service Layer        │  ← Business rules
-│  (validation, workflows)  │
-└──────────────┬─────────────┘
-               │
-┌──────────────▼─────────────┐
-│     Repository / DAO       │  ← Data access
-│  (DB queries / storage)    │
-└──────────────┬─────────────┘
-               │
-┌──────────────▼─────────────┐
-│        Database            │
-│  (Postgres / Mongo / etc)  │
-└────────────────────────────┘
 
-Folder structure
-```
-src/
-│
-├── routes/
-│   ├── project.routes.js
-│   └── task.routes.js
-│
-├── controllers/
-│   ├── project.controller.js
-│   └── task.controller.js
-│
-├── services/
-│   ├── project.service.js
-│   └── task.service.js
-│
-├── repositories/
-│   ├── project.repository.js
-│   └── task.repository.js
-│
-├── models/
-│   ├── project.model.js
-│   └── task.model.js
-│
-├── middlewares/
-│   ├── error.middleware.js
-│   ├── validate.middleware.js
-│   └── auth.middleware.js
-│
-├── utils/
-│   ├── ApiError.js
-│   └── logger.js
-│
-├── app.js
-└── server.js
+## 🏗 Backend Architecture
 
-```
+This project follows a **layered Express.js backend architecture** to ensure
+separation of concerns, scalability, and maintainability.
+
+### Architecture Diagram
+
+![Backend Architecture](assets/architecture.png)
+
+### Architecture Layers
+
+1. **Routing Layer (`/src/routes`)**
+   - Maps HTTP routes to controllers
+   - No business logic
+
+2. **Middleware Layer (`/src/middlewares`)**
+   - Request validation
+   - Centralized error handling
+
+3. **Controller Layer (`/src/controllers`)**
+   - Handles HTTP request/response
+   - Delegates logic to services
+
+4. **Service Layer (`/src/services`)**
+   - Contains core business logic
+   - Coordinates data access
+
+5. **Data Layer (`/src/data`)**
+   - File-based storage (`tasks.json`, `projects.json`)
+   - Accessed via `store.js`
+
+This architecture allows the backend to evolve easily from file-based storage
+to a real database without impacting controllers or routes.
+
 
 - RESTful API design
-- React hooks for state management
+
+## **API Endpoints**
+
+### **Projects**
+
+#### **Create Project**
+
+```http
+POST /api/projects
+Content-Type: application/json
+```
+
+**Request Body:**
+
+```json
+{
+  "name": "Website Redesign",
+  "description": "Redesign the company website"
+}
+```
+
+**Response:**
+
+```json
+{
+  "id": "p1",
+  "name": "Website Redesign",
+  "description": "Redesign the company website",
+  "createdAt": "2026-01-16T10:00:00Z"
+}
+```
+
+---
+
+#### **List Projects**
+
+```http
+GET /api/projects
+Authorization: Bearer <your-token>
+```
+
+**Response:**
+
+```json
+[
+  {
+    "id": "p1",
+    "name": "Website Redesign",
+    "description": "Redesign the company website",
+    "createdAt": "2026-01-16T10:00:00Z"
+  }
+]
+```
+
+---
+
+### **Tasks**
+
+#### **Add Task to a Project**
+
+```http
+POST /api/projects/:projectId/tasks
+Content-Type: application/json
+```
+
+**Request Body:**
+
+```json
+{
+ "data":{
+  "title": "Design database schema",
+  "description": "Create schema for task management",
+  "status": "pending",
+  "createdAt": "26/02/2025"
+    }, 
+   "messgage":"Task successfully created"
+}
+```
+
+**Response:**
+
+```json
+{
+  "id": "t1",
+  "projectId": "p1",
+  "title": "Design database schema",
+  "description": "Create schema for task management",
+  "status": "pending",
+  "createdAt": "2026-01-16T10:05:00Z"
+}
+```
+
+---
+
+#### **List Tasks for a Project**
+
+```http
+GET /api/projects/:projectId/tasks
+Authorization: Bearer <your-token>
+```
+
+**Response:**
+
+```json
+[
+  {
+    "id": "t1",
+    "projectId": "p1",
+    "title": "Design database schema",
+    "description": "Create schema for task management",
+    "status": "pending",
+    "createdAt": "2026-01-16T10:05:00Z"
+  }
+]
+```
+
+---
+
+#### **Update Task Status**
+
+```http
+PUT /api/tasks/:taskId
+Content-Type: application/json
+```
+
+**Request Body:**
+
+```json
+{
+  "status": "completed"
+}
+```
+
+**Response:**
+
+```json
+{
+  "id": "t1",
+  "projectId": "p1",
+  "title": "Design database schema",
+  "description": "Create schema for task management",
+  "status": "completed",
+  "updatedAt": "2026-01-16T11:00:00Z"
+}
+```
+
+#### **Delete a Task**
+
+```http
+DELETE /api/tasks/:taskId
+Content-Type: application/json
+```
+**Response:**
+
+```json
+{
+    "message": "Task deleted successfully",
+    "data": {
+        "id": "569535ec-9360-4192-98bf-bc2a7639292d"
+    }
+}
+```
+
+
+---
+
+## **HTTP Status Codes**
+
+| Code | Meaning                       |
+|------|-------------------------------|
+| 200  | OK – Request succeeded        |
+| 201  | Created – Resource created    |
+| 400  | Bad Request – Invalid input   |
+| 401  | Unauthorized – Authentication required |
+| 404  | Not Found – Resource not found |
+| 500  | Internal Server Error         |
+
+
 
 ## Trade-offs
 - In-memory DB used for speed
@@ -144,4 +293,5 @@ src/
 - Drag-and-drop task board
 - More test coverage
 - Optimised the modal with generic one
-- Add 
+- Need to add redux for state management
+- Add  error bounday
