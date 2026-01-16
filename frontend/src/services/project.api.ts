@@ -1,0 +1,10 @@
+import { apiClient } from "./axios";
+import type { Project } from "../types";
+
+export const getProjects = (): Promise<Project[]> =>
+  apiClient.get("/api/v1/projects");
+
+export const createProject = (name: string, description: string): Promise<Project> =>
+  apiClient.post("/api/v1/projects", { name, description });
+
+
