@@ -1,21 +1,21 @@
 [
   {
-    "id": "p1",
+    "id": "4fd4d2f2-5745-4532-956f-8b8ca870ec9c",
     "name": "Mini Project Manager",
     "description": "Internal tool for managing projects and tracking tasks"
   },
   {
-    "id": "p2",
+    "id": "8ae88261-9f07-4a25-a724-69d661578066",
     "name": "UI Dashboard Revamp",
     "description": "Redesign and modernization of the user interface using Carbon Design System"
   },
   {
-    "id": "p3",
+    "id": "7fc488ad-6c46-4fc0-9182-a579748548e6",
     "name": "Task Board System",
     "description": "Kanban-style task board with status tracking and drag-and-drop support"
   },
   {
-    "id": "p4",
+    "id": "623f8dc4-7308-4c58-88fd-a47caaa0bfca",
     "name": "Reporting & Analytics",
     "description": "Project reporting, metrics, and productivity analytics"
   }

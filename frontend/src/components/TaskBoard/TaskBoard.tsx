@@ -16,16 +16,10 @@ interface Props {
 
 export const TaskBoard = ({ projectId, projectName }: Props) => {
   const { tasks, loading, updateStatus, removeTask, addTask, showNotification, notificationKind, notificationTitle } = useTasks(projectId);
-  const[openModal, setOpenModal] = useState(false);
-
+  const [openModal, setOpenModal] = useState(false);
 
   // 🔒 Prevent empty flicker
   const hasData = tasks.length > 0;
-
-//   useEffect(() => {
-//   console.log("TaskBoard mounted", projectId);
-//   return () => console.log("TaskBoard unmounted");
-// }, []);
 
 
   const groupedTasks = useMemo<Record<TaskStatus, Task[]>>(() => ({
@@ -53,32 +47,27 @@ export const TaskBoard = ({ projectId, projectName }: Props) => {
     return <TaskBoardSkeleton />;
   }
 
-  // ✅ No tasks AFTER load
-  if (!hasData) {
-    return <p style={{ padding: "1rem" }}>No tasks for this project.</p>;
-  }
 
   return (
     <>
-        {showNotification && (
-          <div className="notification margin-dashboard">
-            <InlineNotification
-      
-              lowContrast
-              title={notificationTitle}
-              kind={notificationKind}
-              style={{ marginBottom: '2rem' }}
-            />
-            </div>
-          )}
-    <div >
-     <Tile >      <h3>Task Board</h3></Tile>
-      <Tile style={{display:'flex', justifyContent: 'space-between'}}>
-    
+      {showNotification && (
+        <div className="notification margin-dashboard">
+          <InlineNotification
+
+            lowContrast
+            title={notificationTitle}
+            kind={notificationKind}
+            style={{ marginBottom: '2rem' }}
+          />
+        </div>
+      )}
+      <div >
+        <Tile >
+          <h3>Task Board</h3></Tile>
+        <Tile style={{ display: 'flex', justifyContent: 'space-between' }}>
+
           <div>
-           
             <h4> Project: {projectName}</h4>
-            
           </div>
           <div>
             <Button
@@ -89,45 +78,50 @@ export const TaskBoard = ({ projectId, projectName }: Props) => {
               Create Task
             </Button>
           </div>
-      </Tile>
-    </div>
-    
-    
-    <Grid fullWidth style={{padding: 0, marginTop: '1rem', overflow: "auto"}}>
+        </Tile>
+      </div>
+
+      { !hasData  ? (
+        <>
+        <p style={{ padding: "1rem" }}>No tasks for this project.</p></>
+      ):(
+         <Grid fullWidth style={{ padding: 0, marginTop: '1rem', overflow: "auto" }}>
+
+        <Column lg={6} md={4} sm={6}>
+          <TaskColumn
+            title="PENDING"
+            tasks={groupedTasks.pending}
+            onStatusChange={handleStatusChange}
+            onDelete={handleDelete}
+          />
+        </Column>
+
+        <Column lg={5} md={4} sm={6}>
+          <TaskColumn
+            title="IN PROGRESS"
+            tasks={groupedTasks["in-progress"]}
+            onStatusChange={handleStatusChange}
+            onDelete={handleDelete}
+          />
+        </Column>
+
+        <Column lg={5} md={4} sm={6}>
+          <TaskColumn
+            title="COMPLETED"
+            tasks={groupedTasks.completed}
+            onStatusChange={handleStatusChange}
+            onDelete={handleDelete}
+          />
+        </Column>
+      </Grid>
+      )}
      
-      <Column lg={6} md={4} sm={6}>
-        <TaskColumn
-          title="PENDING"
-          tasks={groupedTasks.pending}
-          onStatusChange={handleStatusChange}
-          onDelete={handleDelete}
-        />
-      </Column>
-
-      <Column lg={5} md={4} sm={6}>
-        <TaskColumn
-          title="IN PROGRESS"
-          tasks={groupedTasks["in-progress"]}
-          onStatusChange={handleStatusChange}
-          onDelete={handleDelete}
-        />
-      </Column>
-
-      <Column lg={5} md={4} sm={6}>
-        <TaskColumn
-          title="COMPLETED"
-          tasks={groupedTasks.completed}
-          onStatusChange={handleStatusChange}
-          onDelete={handleDelete}
-        />
-      </Column>
-    </Grid>
-     <AddTaskModal
+      <AddTaskModal
         open={openModal}
         onClose={() => setOpenModal(false)}
         onSubmit={addTask}
       />
-    
+
       {loading && (
         <div className="loading-overlay">
           <div className="loading-content">
@@ -145,6 +139,6 @@ export const TaskBoard = ({ projectId, projectName }: Props) => {
 
     </>
 
-    
+
   );
 };

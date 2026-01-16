@@ -29,18 +29,19 @@ export const CreateProjectModal = ({
 }: Props) => {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    console.log('on submit', project)
-  
+ const handleSubmit = async () => {
 
-    setLoading(true);
-    await onSave(project?.name, project?.description);
-    setLoading(false);
+  setLoading(true);
 
-    // Reset form
-    setProject({ name: "", description: "" });
-    onClose();
-  };
+  await onSave(project.name, project.description);
+
+  setLoading(false);
+
+  // Reset form
+  setProject({ name: "", description: "" });
+  onClose();
+};
+
 
   return (
     <Modal

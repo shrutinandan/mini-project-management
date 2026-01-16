@@ -53,7 +53,9 @@ npm run dev
 
 Run the following commands to get the app running :
 
+```
 cd backend
+```
 
 ```
 npm install
@@ -179,6 +181,16 @@ Content-Type: application/json
 
 ```json
 {
+  "title": "Design database schema",
+  "description": "Create schema for task management",
+}
+```
+
+**Response:**
+
+```json
+
+{
  "data":{
   "title": "Design database schema",
   "description": "Create schema for task management",
@@ -189,26 +201,13 @@ Content-Type: application/json
 }
 ```
 
-**Response:**
-
-```json
-{
-  "id": "t1",
-  "projectId": "p1",
-  "title": "Design database schema",
-  "description": "Create schema for task management",
-  "status": "pending",
-  "createdAt": "2026-01-16T10:05:00Z"
-}
-```
-
 ---
 
 #### **List Tasks for a Project**
 
 ```http
 GET /api/projects/:projectId/tasks
-Authorization: Bearer <your-token>
+Content-Type: application/json
 ```
 
 **Response:**
@@ -301,4 +300,6 @@ Content-Type: application/json
 - More test coverage
 - Optimised the modal with generic one
 - Need to add redux for state management
-- Add  error bounday
+- Add error bounday
+- Added pagination but data should load according to page, offset and limit via fetchprojectlist api
+- Add dropdown on TaskBoard page for changing the project to view its relevant tasks

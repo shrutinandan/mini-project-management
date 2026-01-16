@@ -40,7 +40,7 @@ export const SidePanel = memo(({ active, onChange }: Props) => {
           renderIcon={Task}
           isActive={active === "taskboard"}
           onClick={() => {onChange("taskboard")
-            navigate(`/tasks/p1/Mini Project Manager`)
+            navigate(`/tasks/4fd4d2f2-5745-4532-956f-8b8ca870ec9c/Mini Project Manager`)
           }}
         >
           Task Board

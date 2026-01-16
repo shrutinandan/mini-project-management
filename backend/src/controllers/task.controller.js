@@ -1,6 +1,6 @@
 const taskService = require("../services/task.service");
 
-exports.createTask = async (req, res) => {
+exports.createTask = async (req, res, next) => {
   try {
     const { projectId } = req.params;
     const { title } = req.body;
@@ -17,13 +17,10 @@ exports.createTask = async (req, res) => {
       data: task
     });
   } catch (error) {
-    console.error("Create task failed:", error);
-
-    return res.status(500).json({
-      message: "Failed to create task"
-    });
+    next(error); // ✅ forward to centralized handler
   }
 };
+
 
 exports.getTasksByProjectId = (req, res) => {
   const tasks = taskService.getTasksByProjectId(req.params.projectId);
@@ -42,17 +39,11 @@ exports.updateTaskStatus = (req, res, next) => {
   }
 };
 
-exports.deleteTask = (req, res, next) => {
+exports.deleteTask = async (req, res, next) => {
   try {
     const { taskId } = req.params;
 
-    const deletedTask = taskService.deleteTask(taskId);
-
-    if (!deletedTask) {
-      return res.status(404).json({
-        message: "Task not found"
-      });
-    }
+    const deletedTask = await taskService.deleteTask(taskId);
 
     return res.status(200).json({
       message: "Task deleted successfully",
@@ -61,7 +52,7 @@ exports.deleteTask = (req, res, next) => {
       }
     });
   } catch (err) {
-    next(err);
+    next(err); // ✅ forward all errors
   }
 };
 

@@ -21,7 +21,7 @@ const loadProjects = () => {
   const parsed = JSON.parse(raw);
 
   projects = parsed.map(p => new Project(p));
-  console.log("✅ Projects loaded:", projects.length, parsed);
+  
 };
 
 /**

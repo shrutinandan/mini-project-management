@@ -1,7 +1,6 @@
 const projectService = require("../services/project.service");
 
 exports.createProject = (req, res, next) => {
-  console.log('req.body', req.body)
   try {
     const project = projectService.createProject(req.body);
     res.status(200).json(project);

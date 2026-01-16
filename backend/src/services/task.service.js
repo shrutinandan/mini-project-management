@@ -41,6 +41,7 @@ const createTask = ({ projectId, title, status = "pending",createdAt }) => {
   return task;
 };
 
+
 /**
  * Get all tasks for a project
  */
@@ -75,7 +76,9 @@ const deleteTask = (taskId) => {
   const index = tasks.findIndex(t => t.id === taskId);
 
   if (index === -1) {
-    return null;
+    const error = new Error("Task not found");
+    error.statusCode = 404;
+    throw error; // ✅ throw error
   }
 
   return tasks.splice(index, 1)[0];

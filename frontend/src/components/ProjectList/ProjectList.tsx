@@ -9,15 +9,14 @@ import {
   TableBody,
   TableCell,
   Button,
-  TextInput,
   Grid,
   Column,
-  Stack,
   DataTableSkeleton,
   TableToolbar,
   TableToolbarSearch,
   type DataTableCell,
-  InlineNotification
+  InlineNotification,
+  Pagination
 } from "@carbon/react";
 
 import type { Project } from "../../types";
@@ -25,7 +24,6 @@ import { getProjects, createProject } from "../../services/project.api";
 // import { fetchTasksByProjectId } from "../../services/task.api";
 import { CreateProjectModal } from "../modal/CreateProjectModal";
 import { Add } from "@carbon/icons-react";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   onSelect: (id: string, name: string) => void;
@@ -47,7 +45,15 @@ export const ProjectList = memo(({ onSelect }: Props) => {
     "Server is not reachable"
   );
   const [notificationKind, setNotificationKind] = useState<NotificationKind>("info");
-  const navigate = useNavigate(); // Use useNavigate inside the c
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
+
+  const projectListData = useMemo(() => {
+    const start = (page - 1) * limit;
+    return projects.slice(start, start + limit);
+  }, [projects, page, limit]);
+
+
 
   // Fetch projects on mount
   useEffect(() => {
@@ -67,36 +73,34 @@ export const ProjectList = memo(({ onSelect }: Props) => {
   }, []);
 
   // Create new project
-  const handleCreate = useCallback(async () => {
-    console.log('project', project)
+  const handleCreate = useCallback(
+  async (name: string, description: string) => {
     try {
-      const response = await createProject(
-        project.name,
-        project.description
-      );
-      console.log('response', response)
+      const response = await createProject(name, description);
+
       setProjects(prev => [...prev, response]);
       setShowNotification(true);
       setNotificationKind("success");
-      setNotificationTitle("Successfully added")
-    } catch (err) {
+      setNotificationTitle("Successfully added");
+    } catch (err: any) {
       console.error("Failed to create project:", err);
       setShowNotification(true);
       setNotificationKind("error");
-      setNotificationTitle("Failed to create project")
+      setNotificationTitle(
+        err?.error || "Failed to create project"
+      );
     }
-  }, [name, description]);
+  },
+  [] // ✅ no state dependency
+);
+
 
 
   const handleSelect = useCallback(
     (projectId: string, projectName: string) => {
       onSelect(projectId, projectName);
-      // navigate("/taskboard")      // parent selection
-      // getTasksByProjectId(projectId); // API call
     },
-    [onSelect,
-      // getTasksByProjectId
-    ]
+    [onSelect]
   );
 
 
@@ -108,6 +112,7 @@ export const ProjectList = memo(({ onSelect }: Props) => {
     if (!searchText.trim()) return projects;
     return projects.filter(
       p =>
+        p.id.toLowerCase().includes(searchText.toLowerCase()) ||
         p.name.toLowerCase().includes(searchText.toLowerCase()) ||
         (p.description?.toLowerCase().includes(searchText.toLowerCase()) ?? false)
     );
@@ -116,7 +121,6 @@ export const ProjectList = memo(({ onSelect }: Props) => {
   // Carbon headers
   const headers = useMemo(
     () => [
-      { key: "id", header: "Project Id" },
       { key: "name", header: "Project Name" },
       { key: "description", header: "Description" },
       { key: "actions", header: "Actions" }
@@ -126,23 +130,24 @@ export const ProjectList = memo(({ onSelect }: Props) => {
 
   // Convert projects to rows
   const rows = useMemo(() => {
-    console.log('filteredProjects', filteredProjects)
     return filteredProjects.map(project => ({
       id: project.id,
       name: project.name,
       description: project.description || "",
       actions: project.id
     }));
-
-
   }, [filteredProjects]);
+
+  const paginatedRows = useMemo(() => {
+  const start = (page - 1) * limit;
+  const end = start + limit;
+  return rows.slice(start, end);
+}, [rows, page, limit]);
+
 
   // Render cell content
   const getCellComponent = (cell: DataTableCell<any>) => {
     const columnId = cell.id.split(":")[1];
-
-
-
 
     switch (columnId) {
       case "actions":
@@ -185,7 +190,8 @@ export const ProjectList = memo(({ onSelect }: Props) => {
           {loading ? (
             <DataTableSkeleton columnCount={3} rowCount={5} headers={headers} compact />
           ) : (
-            <DataTable rows={rows} headers={headers}>
+            <>
+            <DataTable rows={paginatedRows} headers={headers}>
               {({ rows, headers, getHeaderProps, getRowProps, getTableContainerProps }) => (
                 <TableContainer {...getTableContainerProps()} title="Projects">
                   {/* Search Toolbar */}
@@ -230,6 +236,18 @@ export const ProjectList = memo(({ onSelect }: Props) => {
                 </TableContainer>
               )}
             </DataTable>
+               <Pagination
+                      totalItems={rows.length}
+                      pageSize={limit}
+                      pageSizes={[5, 10, 20]}
+                      page={page}
+                      onChange={({ page, pageSize }) => {
+                        setPage(page);
+                        setLimit(pageSize);
+                      }}
+                     
+                    />
+            </>
           )}
           <CreateProjectModal
             open={openModal}
