@@ -268,7 +268,7 @@ Content-Type: application/json
 {
     "message": "Task deleted successfully",
     "data": {
-        "id": "7fc488ad-6c46-4fc0-9182-a579748548e6"
+        "id": "t1"
     }
 }
 ```
