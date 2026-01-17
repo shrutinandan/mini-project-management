@@ -1,5 +1,12 @@
 # Mini Project Management System
-This project demonstrates the ability to design, implement, and document a production-quality full-stack application.
+This project is a Project and Task Management System that allows users to view, create, update, and delete projects and tasks. Users can:
+
+- View all projects along with their associated tasks.
+- Create new projects and tasks.
+- Update task details or project information.
+- Delete tasks or projects as needed.
+
+It demonstrates the ability to design and implement a full-stack management system with a clean, intuitive interface and in-memory data storage.
 
 ## 🛠️ Installation
 
@@ -19,12 +26,7 @@ This project demonstrates the ability to design, implement, and document a produ
 VITE_BACKEND_URL= # replace this with backend url.
 VITE_ENVNAME=DEV. #value should be DEV | PROD
 
-
 ```
-
----
-
-
 
 ### Local Execution
 
@@ -58,7 +60,6 @@ Run the following commands to get the app running :
 ```
 cd backend
 ```
-
 ```
 npm install
 ```
@@ -69,6 +70,12 @@ npm run dev
 ---
 
 ## Architecture
+
+## Project Architecture (Client-Server)
+
+This diagram illustrates the complete flow of the project, showing how the frontend interacts with the backend, how data is stored in the in-memory store (store.js), and how API routes handle tasks and projects.
+
+![Client-Server Architecture](/assets/full_arch.png)
 
 ## 🏗 Backend Architecture
 
