@@ -48,6 +48,13 @@ export const useTasks = (projectId: string) => {
       setTasks(prev => prev.map(t => (t.id === taskId ? updated : t)));
     } catch (err) {
       console.error(err);
+      setShowNotification(true);
+      setNotificationKind("error");
+      setNotificationTitle(
+        err instanceof Error
+          ? err.message
+          : "Failed to update task"
+      );
     } finally {
       setLoading(false);
     }

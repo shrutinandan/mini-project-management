@@ -304,3 +304,4 @@ Content-Type: application/json
 - Add more messages for error bounday 
 - Added pagination but data should load according to page, offset and limit via fetchprojectlist api
 - Add dropdown on TaskBoard page for changing the project to view its relevant tasks
+- Remove all inline styling and make it as class

@@ -70,20 +70,41 @@ export const createTask = async (
 
 
 /**
- * Updates the status of a task
+ * Update the status of an existing task.
  *
- * @param taskId - ID of the task to update
- * @param status - New status for the task
- * @returns Updated task object
+ * Sends a PUT request to update the task status and
+ * normalizes the backend response before returning it.
+ *
+ * @param taskId - Unique identifier of the task
+ * @param status - New status to be applied to the task
+ *
+ * @returns A promise that resolves to the updated task
+ *
+ * @throws Error when the API request fails or response is invalid
  */
 export const updateTaskStatus = async (
   taskId: string,
   status: TaskStatus
 ): Promise<Task> => {
-  const res = await apiClient.put(`/api/v1/tasks/${taskId}`, { status });
+  try {
+    const res: any = await apiClient.put(
+      `/api/v1/tasks/${taskId}`,
+      { status }
+    );
 
-  // Defensive return in case API wraps response
-  return res.data?.data ?? res.data;
+    // Defensive return in case API wraps response as { data }
+    const updatedTask = res?.data?.data ?? res?.data ?? res;
+
+    if (!updatedTask?.id) {
+      throw new Error("Invalid task update response");
+    }
+
+    return updatedTask;
+  } catch (err: any) {
+    throw new Error(
+      err?.response?.data?.errors[0] || "Failed to update task status"
+    );
+  }
 };
 
 
