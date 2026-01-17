@@ -21,10 +21,14 @@ exports.createTask = async (req, res, next) => {
   }
 };
 
-
 exports.getTasksByProjectId = (req, res) => {
-  const tasks = taskService.getTasksByProjectId(req.params.projectId);
-  res.json(tasks);
+
+  try {
+    const tasks = taskService.getTasksByProjectId(req.params.projectId);
+    res.json(tasks);
+  } catch (err) {
+    next(err); // ✅ forward to centralized handler
+  }
 };
 
 exports.updateTaskStatus = (req, res, next) => {
@@ -35,7 +39,7 @@ exports.updateTaskStatus = (req, res, next) => {
     );
     res.json(task);
   } catch (err) {
-    next(err);
+    next(err); // ✅ forward to centralized handler
   }
 };
 
@@ -52,7 +56,7 @@ exports.deleteTask = async (req, res, next) => {
       }
     });
   } catch (err) {
-    next(err); // ✅ forward all errors
+    next(err); // ✅ forward to centralized handler
   }
 };
 

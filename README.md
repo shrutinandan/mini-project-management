@@ -301,6 +301,6 @@ Content-Type: application/json
 - More test coverage
 - Optimised the modal with generic one
 - Need to add redux for state management
-- Add error bounday
+- Add more messages for error bounday 
 - Added pagination but data should load according to page, offset and limit via fetchprojectlist api
 - Add dropdown on TaskBoard page for changing the project to view its relevant tasks

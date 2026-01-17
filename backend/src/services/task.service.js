@@ -32,7 +32,7 @@ const createTask = ({ projectId, title, status = "pending",createdAt }) => {
   if (!title) {
     const err = new Error("Task title is required");
     err.status = 400;
-    throw err;
+    throw err;  // ✅ throw error
   }
 
   const task = new Task({ projectId, title, status, createdAt });
@@ -45,24 +45,29 @@ const createTask = ({ projectId, title, status = "pending",createdAt }) => {
 /**
  * Get all tasks for a project
  */
-const getTasksByProjectId = (projectId) =>
-  tasks.filter(t => t.projectId === projectId);
+const getTasksByProjectId = (projectId) => {
+  if (!projectId) {
+    const err = new Error("Project Id is required");
+    err.status = 400;
+    throw err;  // ✅ throw error
+  }
+  return tasks.filter(t => t.projectId === projectId);
+}
 
 /**
  * Get task by ID
  */
 const getTaskById = (taskId) =>
   tasks.find(t => t.id === taskId);
-
 /**
  * Update task status
  */
 const updateTaskStatus = (taskId, status) => {
   const task = getTaskById(taskId);
   if (!task) {
-    const err = new Error("Task not found");
-    err.status = 404;
-    throw err;
+    const error = new Error("Task not found");
+    error.status = 404;
+    throw error;  // ✅ throw error
   }
 
   task.status = status;

@@ -31,7 +31,7 @@ const createProject = ({ name, description }) => {
   if (!name) {
     const err = new Error("Project name is required");
     err.status = 400;
-    throw err;
+    throw err; // ✅ throw error
   }
 
   const project = new Project({ name, description });
@@ -45,12 +45,9 @@ const createProject = ({ name, description }) => {
  */
 const getProjects = () => projects;
 
-const getProjectById = id =>
-  projects.find(project => project.id === id);
 
 module.exports = {
   loadProjects,
   createProject,
   getProjects,
-  getProjectById
 };

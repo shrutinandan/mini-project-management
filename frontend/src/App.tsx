@@ -13,6 +13,7 @@ import "./App.scss";
 import { Dashboard } from "./pages/Dashboard";
 import { SidePanel } from "./components/SidePanel/SidePanel";
 import { TaskBoardWrapper } from "./components/TaskBoardWrapper/TaskBoardWrapper";
+import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 
 /**
  * HeaderComponent
@@ -65,39 +66,41 @@ const App = (): JSX.Element => {
     useState<"projects" | "taskboard">("projects");
 
   return (
-    <BrowserRouter>
-      {/* Carbon global theme wrapper */}
-      <Theme theme="g100">
-        <HeaderContainer
-          render={() => (
-            <>
-              {/* Top navigation header */}
-              <HeaderComponent />
+    <ErrorBoundary>
+      <BrowserRouter>
+        {/* Carbon global theme wrapper */}
+        <Theme theme="g100">
+          <HeaderContainer
+            render={() => (
+              <>
+                {/* Top navigation header */}
+                <HeaderComponent />
 
-              {/* Left navigation panel */}
-              <SidePanel
-                active={activeSection}
-                onChange={setActiveSection}
-              />
+                {/* Left navigation panel */}
+                <SidePanel
+                  active={activeSection}
+                  onChange={setActiveSection}
+                />
 
-              {/* Main content area: route-driven */}
-              <Content style={{ height: "100vh" }}>
-                <Routes>
-                  {/* Dashboard: project listing */}
-                  <Route path="/" element={<Dashboard />} />
+                {/* Main content area: route-driven */}
+                <Content style={{ height: "100vh" }}>
+                  <Routes>
+                    {/* Dashboard: project listing */}
+                    <Route path="/" element={<Dashboard />} />
 
-                  {/* Task board scoped to a project */}
-                  <Route
-                    path="/tasks/:projectId/:projectName"
-                    element={<TaskBoardWrapper />}
-                  />
-                </Routes>
-              </Content>
-            </>
-          )}
-        />
-      </Theme>
-    </BrowserRouter>
+                    {/* Task board scoped to a project */}
+                    <Route
+                      path="/tasks/:projectId/:projectName"
+                      element={<TaskBoardWrapper />}
+                    />
+                  </Routes>
+                </Content>
+              </>
+            )}
+          />
+        </Theme>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };
 
