@@ -225,7 +225,7 @@ Content-Type: application/json
 ```json
 [
   {
-    "id": "t1",
+    "id": "d5f9f893-6958-4be2-9e89-f380496ce7e2",
     "projectId": "7fc488ad-6c46-4fc0-9182-a579748548e6",
     "title": "Design database schema",
     "status": "pending",
@@ -255,7 +255,7 @@ Content-Type: application/json
 
 ```json
 {
-  "id": "t1",
+  "id": "d5f9f893-6958-4be2-9e89-f380496ce7e2",
   "projectId": "7fc488ad-6c46-4fc0-9182-a579748548e6",
   "title": "Design database schema",
   "status": "completed",
@@ -275,7 +275,7 @@ Content-Type: application/json
 {
     "message": "Task deleted successfully",
     "data": {
-        "id": "t1"
+        "id": "d5f9f893-6958-4be2-9e89-f380496ce7e2"
     }
 }
 ```
