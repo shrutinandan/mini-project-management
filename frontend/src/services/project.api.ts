@@ -1,9 +1,11 @@
 import { apiClient } from "../config/axios";
 import type { Project, ProjectResponse } from "../types/project";
 
+export const getProjects = async (): Promise<Project[]> => {
+  const res = await apiClient.get("/api/v1/projects");
+  return res.data ?? [];
+};
 
-export const getProjects = (): Promise<Project[]> =>
-  apiClient.get("/api/v1/projects");
 
 export const createProject = async (
   name: string,
@@ -15,7 +17,7 @@ export const createProject = async (
       { name, description }
     );
 
-    const response = res as any; // backend returns { message, data }
+    const response = res.data; // backend returns { message, data }
 
     if (!response?.data?.id) {
       throw new Error("Invalid project response");
@@ -23,11 +25,7 @@ export const createProject = async (
 
     return {
       message: response.message,
-      data: {
-        id: response.data.id,
-        name: response.data.name,
-        description: response.data.description ?? "",
-      }
+      data: response.data
     };
   } catch (err: any) {
     throw new Error(

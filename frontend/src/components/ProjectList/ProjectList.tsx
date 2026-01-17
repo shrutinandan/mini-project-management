@@ -153,7 +153,6 @@ export const ProjectList = memo(({ onSelect }: Props) => {
         (p.description?.toLowerCase().includes(searchText.toLowerCase()) ?? false)
     );
   }, [projects, searchText]);
-  console.log('filteredProjects', filteredProjects)
 
   // ------------------------------
   // Carbon DataTable headers

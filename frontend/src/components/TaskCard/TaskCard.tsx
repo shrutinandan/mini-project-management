@@ -10,11 +10,7 @@ interface Props {
   onDelete: (taskId: string) => void;
 }
 
-
-
-
-const statusMap: Record<
-  TaskStatus,
+const statusMap: Record<TaskStatus,
   { label: string; type: TagProps<"span">["type"] }
 > = {
   pending: { label: "Pending", type: "gray" },
