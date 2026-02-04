@@ -1,0 +1,35 @@
+Title: Customer Profile Management System – Design Document
+Version: 1.0
+Author: Architecture Team
+Date: 01-Jan-2025
+
+1. Introduction
+The Customer Profile Management System (CPMS) is designed to store and manage
+customer profile information for internal applications.
+
+2. Scope
+The system will handle customer basic details such as name, email, phone number,
+and address.
+
+3. Architecture Overview
+The system follows a three-tier architecture:
+- Presentation Layer: React-based web application
+- Application Layer: Python-based REST APIs
+- Data Layer: PostgreSQL database
+
+4. Authentication
+The system uses username and password-based authentication.
+Passwords are stored using SHA-256 hashing.
+
+5. API Design
+The following APIs are exposed:
+- POST /customers
+- GET /customers/{id}
+- PUT /customers/{id}
+
+6. Error Handling
+All API errors return standard HTTP status codes.
+
+7. Non-Functional Requirements
+- Response time should be less than 2 seconds.
+- System availability should be 99.5%.
